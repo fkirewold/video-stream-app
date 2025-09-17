@@ -40,3 +40,10 @@ flutter pub get
 ```bash
 flutter run
 ```
+You can test on:
+
+Two physical devices
+
+Emulators (with proper camera/mic permissions)
+
+Same or different networks (STUN server helps with NAT traversal)
