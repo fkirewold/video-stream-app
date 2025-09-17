@@ -44,3 +44,5 @@ flutter run
 - Two physical devices
 - Emulators (with proper camera/mic permissions)
 - Same or different networks (STUN server helps with NAT traversal)
+### 📄 License
+This project is licensed under the MIT License. You are free to use, modify, and distribute this software with proper attribution.
