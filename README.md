@@ -1,20 +1,35 @@
-# Flutter Video Streaming App (WebRTC + WebSocket + STUN + Firestore)
+# 📹 Flutter WebRTC Video Streaming App
 
-A starter project that demonstrates peer-to-peer video streaming in Flutter using:
-- **flutter_webrtc** for media and WebRTC APIs  
-- **WebSocket** for signaling (offer/answer/ICE candidates)  
-- **STUN** for NAT traversal  
-- **Firebase Firestore** to store room metadata / availability 
+## 🚀 Overview
+A real-time video streaming app built with Flutter, using WebRTC for peer-to-peer communication, WebSocket for signaling, and STUN servers for NAT traversal. Ideal for live video chat, remote collaboration, or virtual classrooms.
 
+## 🛠️ Features
+- Real-time video and audio streaming
+- Peer-to-peer connection via WebRTC
+- WebSocket-based signaling
+- STUN server integration for NAT traversal
+- Cross-platform support (Android & iOS)
 
-## Features
-- Create / join room
-- Local & remote video streams
-- Signaling over WebSocket
-- Room list stored in Firestore
-- Basic reconnection logic for WebSocket
+## 📦 Tech Stack
 
----
+| Technology        | Purpose                                 |
+|-------------------|------------------------------------------|
+| `flutter_webrtc`  | WebRTC implementation in Flutter         |
+| `WebSocket`       | Signaling between peers                  |
+| `STUN server`     | Discover public IP and port for NAT      |
+| `Dart`            | Programming language                     |
+| `Flutter`         | UI framework                             |
 
-## Project structure (suggested)
+## 📲 Getting Started
 
+### Prerequisites
+- Flutter SDK installed
+- Android Studio or Xcode
+- STUN server (e.g. `stun:stun.l.google.com:19302`)
+- WebSocket signaling server (custom or Firebase)
+
+### Installation
+```bash
+git clone https://github.com/your-username/flutter-webrtc-video-app.git
+cd flutter-webrtc-video-app
+flutter pub get
