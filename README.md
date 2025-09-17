@@ -1,16 +1,16 @@
-# 📹 Flutter WebRTC Video Streaming App
+# Flutter WebRTC Video Streaming App
 
 ## Overview
 A real-time video streaming app built with Flutter, using WebRTC for peer-to-peer communication, WebSocket for signaling, and STUN servers for NAT traversal. Ideal for live video chat, remote collaboration, or virtual classrooms.
 
-## 🛠️ Features
+## Features
 - Real-time video and audio streaming
 - Peer-to-peer connection via WebRTC
 - WebSocket-based signaling
 - STUN server integration for NAT traversal
 - Cross-platform support (Android & iOS)
 
-##  Tech Stack
+## Tech Stack
 
 | Technology        | Purpose                                 |
 |-------------------|------------------------------------------|
