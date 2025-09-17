@@ -1,16 +1,20 @@
-# video_stream_app
+# Flutter Video Streaming App (WebRTC + WebSocket + STUN + Firestore)
 
-A new Flutter project.
+A starter project that demonstrates peer-to-peer video streaming in Flutter using:
+- **flutter_webrtc** for media and WebRTC APIs  
+- **WebSocket** for signaling (offer/answer/ICE candidates)  
+- **STUN** for NAT traversal  
+- **Firebase Firestore** to store room metadata / availability 
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Features
+- Create / join room
+- Local & remote video streams
+- Signaling over WebSocket
+- Room list stored in Firestore
+- Basic reconnection logic for WebSocket
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Project structure (suggested)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
