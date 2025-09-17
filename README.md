@@ -28,16 +28,11 @@ A real-time video streaming app built with Flutter, using WebRTC for peer-to-pee
 - STUN server (e.g. `stun:stun.l.google.com:19302`)
 - WebSocket signaling server (custom or Firebase)
 
-### Installation
+## ▶ How to Run
 ```bash
 git clone https://github.com/fkirewold/video-stream-app.git
 cd video-stream-app.git
 flutter pub get
-```
-## ▶️ How to Run
-
-### 1. Clone the Repository
-```bash
 flutter run
 ```
 **You can test on:**
