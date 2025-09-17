@@ -38,6 +38,5 @@ flutter pub get
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/flutter-webrtc-video-app.git
-cd flutter-webrtc-video-app
+flutter run
 ```
