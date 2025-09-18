@@ -29,9 +29,13 @@ A real-time video streaming app built with Flutter, using WebRTC for peer-to-pee
 - WebSocket signaling server (Firebase Firestore)
 
 ## ▶ How to Run
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/fkirewold/video-stream-app.git
 cd video-stream-app.git
+```
+### 2. Install Dependencies
+```bash
 flutter pub get
 flutter run
 ```
