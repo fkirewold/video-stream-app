@@ -41,7 +41,8 @@ flutter run
 ```
 ### 3. Configure STUN & Signaling Server
 **Update your ICE server and signaling logic in your Dart files:
-**``dart
+**
+```dart
 final Map<String, dynamic> config = {
   'iceServers': [
     {'urls': 'stun:stun.l.google.com:19302'},
