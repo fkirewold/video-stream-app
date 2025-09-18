@@ -32,7 +32,7 @@ A real-time video streaming app built with Flutter, using WebRTC for peer-to-pee
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/fkirewold/video-stream-app.git
-cd video-stream-app.git
+cd video-stream-app
 ```
 ### 2. Install Dependencies
 ```bash
