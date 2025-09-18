@@ -40,8 +40,7 @@ flutter pub get
 flutter run
 ```
 ### 3. Configure STUN & Signaling Server
-**Update your ICE server and signaling logic in your Dart files:
-**
+**Update your ICE server and signaling logic in your Dart files:**
 ```dart
 final Map<String, dynamic> config = {
   'iceServers': [
