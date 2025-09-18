@@ -37,7 +37,6 @@ cd video-stream-app
 ### 2. Install Dependencies
 ```bash
 flutter pub get
-flutter run
 ```
 ### 3. Configure STUN & Signaling Server
 **Update your ICE server and signaling logic in your Dart files:**
@@ -47,6 +46,10 @@ final Map<String, dynamic> config = {
     {'urls': 'stun:stun.l.google.com:19302'},
   ],
 };
+```
+### 4. Run the App
+```bash
+flutter run
 ```
 **You can test on:**
 - Two physical devices
