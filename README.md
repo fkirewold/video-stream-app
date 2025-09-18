@@ -39,6 +39,15 @@ cd video-stream-app
 flutter pub get
 flutter run
 ```
+### 3. Configure STUN & Signaling Server
+**Update your ICE server and signaling logic in your Dart files:
+**``dart
+final Map<String, dynamic> config = {
+  'iceServers': [
+    {'urls': 'stun:stun.l.google.com:19302'},
+  ],
+};
+```
 **You can test on:**
 - Two physical devices
 - Emulators (with proper camera/mic permissions)
