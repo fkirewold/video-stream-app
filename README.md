@@ -24,9 +24,9 @@ A real-time video streaming app built with Flutter, using WebRTC for peer-to-pee
 
 ### Prerequisites
 - Flutter SDK installed
-- Android Studio or Xcode
+- Android Studio or Xcode or vscode
 - STUN server (e.g. `stun:stun.l.google.com:19302`)
-- WebSocket signaling server (custom or Firebase)
+- WebSocket signaling server (Firebase Firestore)
 
 ## ▶ How to Run
 ```bash
