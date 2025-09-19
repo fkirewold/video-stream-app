@@ -24,6 +24,11 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
     localRenderer.dispose();
     remoteRenderer.dispose();
     super.dispose();
+    signaling.onAddRemoteStream=(stream){
+      remoteRenderer.srcObject=stream;
+      setState(() {
+      });
+    };
   }
 
 initRenderers() async {
