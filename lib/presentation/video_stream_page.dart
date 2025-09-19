@@ -12,18 +12,21 @@ class VideoStreamPage extends StatefulWidget {
 
 class _VideoStreamPageState extends State<VideoStreamPage> {
   FirebaseFirestore instance=FirebaseFirestore.instance;
-  RTCVideoRenderer _localRenderer = RTCVideoRenderer();
+  RTCVideoRenderer localRenderer = RTCVideoRenderer();
+  RTCVideoRenderer remoteRenderer=RTCVideoRenderer();
   @override void initState() {
     super.initState();
     initRenderers();
   }
   @override void dispose() {
-    _localRenderer.dispose();
+    localRenderer.dispose();
+    remoteRenderer.dispose();
     super.dispose();
   }
 
 initRenderers() async {
-    await _localRenderer.initialize();
+    await localRenderer.initialize();
+    await remoteRenderer.initialize();
   }
 
   @override
@@ -36,7 +39,7 @@ initRenderers() async {
         "name":"John Doe",  });
           }, child: Text('Add  User to FireStore',style:TextStyle(color: Colors.green),))
         ),
-        RTCVideoView(_localRenderer)
+        RTCVideoView(localRenderer)
       ],
     );
   }
