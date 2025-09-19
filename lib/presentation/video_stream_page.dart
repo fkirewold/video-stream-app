@@ -46,7 +46,12 @@ initRenderers() async {
         "name":"John Doe",  });
           }, child: Text('Add  User to FireStore',style:TextStyle(color: Colors.green),))
         ),
-        RTCVideoView(localRenderer)
+        Row(
+          children: [
+            RTCVideoView(localRenderer),
+            RTCVideoView(remoteRenderer),
+          ],
+        ),
       ],
     );
   }
