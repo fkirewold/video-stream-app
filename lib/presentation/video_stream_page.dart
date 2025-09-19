@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:video_stream_app/core/utils/signaling.dart';
 
 class VideoStreamPage extends StatefulWidget {
   const VideoStreamPage({super.key});
@@ -14,6 +15,7 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
   FirebaseFirestore instance=FirebaseFirestore.instance;
   RTCVideoRenderer localRenderer = RTCVideoRenderer();
   RTCVideoRenderer remoteRenderer=RTCVideoRenderer();
+  Signaling signaling=Signaling();
   @override void initState() {
     super.initState();
     initRenderers();
