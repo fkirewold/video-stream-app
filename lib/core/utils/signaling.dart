@@ -36,7 +36,24 @@ class Signaling {
       RTCSessionDescription offer=await peerConnection!.createOffer();
       await peerConnection?.setLocalDescription(offer);
       print('offer created:$offer');
-      
+
+      Map<String,dynamic> roomWithOffer={
+        "offer":{
+          "type":offer.type,
+          "sdp":offer.sdp
+        }
+      };
+      await roomRef.set(roomWithOffer);
+      roomRef.snapshots().listen((snapshot) async{
+        Map<String,dynamic> data=snapshot.data() as Map<String,dynamic>;
+        if(peerConnection?.getRemoteDescription()!=null && data['answer']!=null){
+          print('Answer received:$data');
+          RTCSessionDescription answer=RTCSessionDescription(data['answer']['sdp'],data['answer']['type']);
+          await peerConnection?.setRemoteDescription(answer);
+        }
+      });
+
+
 
 
       return roomRef.id;
