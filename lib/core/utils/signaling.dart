@@ -12,7 +12,7 @@ class Signaling {
 
     Future<String> createRoom(RTCVideoRenderer remoteRenderer)async{
      FirebaseFirestore firestore=FirebaseFirestore.instance;
-     DocumentReference roomRef=await firestore.collection("rooms").doc();
+     DocumentReference roomRef= firestore.collection("rooms").doc();
       
 
       Map<String,dynamic> configuration={
@@ -27,6 +27,18 @@ class Signaling {
       localStream?.getTracks().forEach((track){
         peerConnection?.addTrack(track,localStream!);
       });
+      var callerCandidateCollection=roomRef.collection("callerCandidates");
+      peerConnection?.onIceCandidate=(RTCIceCandidate candidate)async{
+              print('Got candidate: ${candidate.toMap()}');
+          callerCandidateCollection.add(candidate.toMap());
+
+      };
+      RTCSessionDescription offer=await peerConnection!.createOffer();
+      await peerConnection?.setLocalDescription(offer);
+      print('offer created:$offer');
+      
+
+
       return roomRef.id;
     }
    void registerPeerConnectionListners(){
