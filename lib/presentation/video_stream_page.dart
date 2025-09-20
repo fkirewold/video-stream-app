@@ -40,16 +40,11 @@ initRenderers() async {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Center(
-          child:ElevatedButton(onPressed: ()async{
-          await instance.collection("users").add({
-        "name":"John Doe",  });
-          }, child: Text('Add  User to FireStore',style:TextStyle(color: Colors.green),))
-        ),
+        SizedBox(height: 50,),
         Row(
           children: [
-            RTCVideoView(localRenderer),
-            RTCVideoView(remoteRenderer),
+            Expanded(child: RTCVideoView(localRenderer)),
+            Expanded(child: RTCVideoView(remoteRenderer)),
           ],
         ),
       ],

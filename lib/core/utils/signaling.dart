@@ -1,7 +1,5 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 class Signaling {
  
@@ -15,7 +13,8 @@ class Signaling {
     Future<String> createRoom(RTCVideoRenderer remoteRenderer)async{
      FirebaseFirestore firestore=FirebaseFirestore.instance;
      DocumentReference roomRef=await firestore.collection("rooms").doc();
-    
+      
+
       Map<String,dynamic> configuration={
         "iceServers":[
           {
@@ -27,9 +26,8 @@ class Signaling {
       registerPeerConnectionListners();
       localStream?.getTracks().forEach((track){
         peerConnection?.addTrack(track,localStream!);
-
-
       });
+      return roomRef.id;
     }
    void registerPeerConnectionListners(){
     peerConnection?.onIceGatheringState=(RTCIceGatheringState state){
@@ -39,7 +37,7 @@ class Signaling {
     peerConnection?.onConnectionState=(RTCPeerConnectionState state){
       print('Conection state change:$state');
 
-    }
+    };
     peerConnection?.onSignalingState=(RTCSignalingState state ){
       print('Signaling State changed:$state');
     };
