@@ -37,6 +37,11 @@ class Signaling {
       "offer": {"type": offer.type, "sdp": offer.sdp}
     };
     await roomRef.set(roomWithOffer);
+     peerConnection?.onTrack = (RTCTrackEvent event) {
+      print("Adding remote stream");
+      remoteRenderer.srcObject = event.streams[0];
+    };
+
     roomRef.snapshots().listen((snapshot) async {
       Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
       if (peerConnection?.getRemoteDescription() != null &&
@@ -48,7 +53,7 @@ class Signaling {
       }
     });
     print('New room created with SDK offer. Room ID: ${roomRef.id}');
-    var currentRoomText = 'Current room is ${roomRef.id} - You are the caller!';
+   // var currentRoomText = 'Current room is ${roomRef.id} - You are the caller!';
     roomRef.snapshots().listen((snapshot) async {
       print('Got updated room: ${snapshot.data()}');
 
@@ -62,6 +67,9 @@ class Signaling {
 
         print("Someone tried to connect");
         await peerConnection?.setRemoteDescription(answer);
+        // var currentRoomText = 'Current room is ${roomRef.id} - You are the receiver!';
+
+
       }
     });
 
