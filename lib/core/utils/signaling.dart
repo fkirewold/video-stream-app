@@ -5,6 +5,7 @@ class Signaling {
   RTCPeerConnection? peerConnection;
   MediaStream? localStream;
   MediaStream? remoteStream;
+  String? roomId;
 
     Map<String, dynamic> configuration = {
       "iceServers": [
@@ -46,10 +47,11 @@ class Signaling {
       'offer':offer.toMap()
     };
     await roomRef.set(roomWithOffer);
+    roomId=roomRef.id;
     
-    print('New room created with SDK offer. Room ID: ${roomRef.id}');
+    print('New room created with SDK offer. Room ID: ${roomId}');
    // var currentRoomText = 'Current room is ${roomRef.id} - You are the caller!';
-    return roomRef.id;
+    return roomId!;
   }
 
   void registerPeerConnectionListners() {
@@ -78,15 +80,37 @@ class Signaling {
  remoteRenderer.srcObject=await createLocalMediaStream('key');
 
 }
-  Future<void> hangUp() async {
-    try {
-      await localStream?.dispose();
-      await remoteStream?.dispose();
-      await peerConnection?.close();
-      peerConnection = null;
-    } catch (e) {
-      print(e.toString());
+  Future<void> hangUp(RTCVideoRenderer localRenderer)async {
+    List<MediaStreamTrack> tracks= localRenderer.srcObject!.getTracks();
+    for(var track in tracks)
+    {
+      track.stop();
     }
+    if(remoteStream!=null)
+    {
+      remoteStream?.getTracks().forEach((track)=>track.stop());
+    }
+    if(peerConnection!=null)
+    {
+      await peerConnection?.close();
+    }
+    if(roomId!=null)
+    {
+      var firestore=FirebaseFirestore.instance;
+      var roomRef=firestore.collection('rooms').doc(roomId);
+      var calleeCandidates= await roomRef.collection('calleeCandidates').get();
+      for(var doc in calleeCandidates.docs)
+      {
+        await doc.reference.delete();
+      }
+      var callerCandidates= await roomRef.collection('callerCandidates').get();
+      for(var doc in callerCandidates.docs)
+      {
+        await doc.reference.delete();
+      }
+      await roomRef.delete();
+    }
+  
   }
   Future<void> joinRoom(String roomId, RTCVideoRenderer remoteRenderer) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
