@@ -65,4 +65,20 @@ class Signaling {
     };
   
   }
+Future<void> openUserMedia(RTCVideoRenderer localRenderer, RTCVideoRenderer remoteRenderer) async {
+ 
+ final Map<String,dynamic> mediaConstraints={
+  'audio':true,
+  'video': {
+    'facingMode':'user',
+  }
+ };
+ localStream= await navigator.mediaDevices.getUserMedia(mediaConstraints);
+ localRenderer.srcObject=localStream;
+ remoteRenderer.srcObject=await createLocalMediaStream('key');
+
+}
+
+
+
 }
