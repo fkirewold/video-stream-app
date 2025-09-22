@@ -40,6 +40,7 @@ initRenderers() async {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        
         Expanded(
           child: RTCVideoView(localRenderer,mirror:true),
         ),
@@ -49,6 +50,7 @@ initRenderers() async {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+
             ElevatedButton(onPressed: ()async{
               await signaling.openUserMedia(localRenderer, remoteRenderer);
               setState(() {
