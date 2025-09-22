@@ -24,6 +24,12 @@ class Signaling {
     localStream?.getTracks().forEach((track) {
       peerConnection?.addTrack(track, localStream!);
     });
+    peerConnection?.onTrack=(RTCTrackEvent event) {
+      if (event.streams.isNotEmpty) {
+        onAddRemoteStream?.call(event.streams[0]);
+        remoteStream = event.streams[0];
+      }
+    };
     var callerCandidateCollection = roomRef.collection("callerCandidates");
     peerConnection?.onIceCandidate = (RTCIceCandidate candidate) async {
       print('Got candidate: ${candidate.toMap()}');
@@ -72,9 +78,6 @@ class Signaling {
     peerConnection?.onSignalingState = (RTCSignalingState state) {
       print('Signaling State changed:$state');
     };
-    peerConnection?.onAddStream = (MediaStream stream) {
-      onAddRemoteStream?.call(stream);
-      remoteStream = stream;
-    };
+  
   }
 }

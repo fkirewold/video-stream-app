@@ -41,12 +41,12 @@ initRenderers() async {
     return Column(
       children: [
         SizedBox(height: 50,),
-        Row(
-          children: [
-            Expanded(child: RTCVideoView(localRenderer)),
-            Expanded(child: RTCVideoView(remoteRenderer)),
-          ],
-        ),
+        // Row(
+        //   children: [
+        //     Expanded(child: RTCVideoView(localRenderer)),
+        //     Expanded(child: RTCVideoView(remoteRenderer)),
+        //   ],
+        // ),
       ],
     );
   }
