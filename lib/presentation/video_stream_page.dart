@@ -59,13 +59,13 @@ initRenderers() async {
               setState(() {
               });
             }, child: Text("Create Room")),
-            // ElevatedButton(onPressed: ()async{
-            //   await signaling.hangUp(localRenderer);
-            //   setState(() {
-            //     remoteRenderer.srcObject=null;
-            //     localRenderer.srcObject=null;
-            //   });
-            // }, child: Text("Hang Up")),
+            ElevatedButton(onPressed: ()async{
+              await signaling.hangUp(localRenderer);
+              setState(() {
+                remoteRenderer.srcObject=null;
+                localRenderer.srcObject=null;
+              });
+            }, child: Text("Hang Up")),
           ],
         )
       ],
