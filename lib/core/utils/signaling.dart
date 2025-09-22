@@ -65,7 +65,7 @@ class Signaling {
     };
   
   }
-Future<void> openUserMedia(RTCVideoRenderer localRenderer, RTCVideoRenderer remoteRenderer) async {
+  Future<void> openUserMedia(RTCVideoRenderer localRenderer, RTCVideoRenderer remoteRenderer) async {
  
  final Map<String,dynamic> mediaConstraints={
   'audio':true,
@@ -78,7 +78,16 @@ Future<void> openUserMedia(RTCVideoRenderer localRenderer, RTCVideoRenderer remo
  remoteRenderer.srcObject=await createLocalMediaStream('key');
 
 }
-
+  Future<void> hangUp() async {
+    try {
+      await localStream?.dispose();
+      await remoteStream?.dispose();
+      await peerConnection?.close();
+      peerConnection = null;
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
 
 }
