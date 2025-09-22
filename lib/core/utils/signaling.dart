@@ -6,12 +6,6 @@ class Signaling {
   MediaStream? localStream;
   MediaStream? remoteStream;
 
-  Function(MediaStream stream)? onAddRemoteStream;
-
-  Future<String> createRoom(RTCVideoRenderer remoteRenderer) async {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    DocumentReference roomRef = firestore.collection("rooms").doc();
-
     Map<String, dynamic> configuration = {
       "iceServers": [
         {
@@ -19,6 +13,12 @@ class Signaling {
         }
       ]
     };
+  Function(MediaStream stream)? onAddRemoteStream;
+
+  Future<String> createRoom(RTCVideoRenderer remoteRenderer) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    DocumentReference roomRef = firestore.collection("rooms").doc();
+
     peerConnection = await createPeerConnection(configuration);
     registerPeerConnectionListners();
     localStream?.getTracks().forEach((track) {
@@ -30,7 +30,7 @@ class Signaling {
         remoteStream = event.streams[0];
       }
     };
-
+ 
     var callerCandidatesCollection= roomRef.collection('callerCandidates');
     peerConnection?.onIceCandidate =(RTCIceCandidate candidate)
     {
@@ -97,13 +97,6 @@ class Signaling {
       Map<String, dynamic> data = roomSnapshot.data() as Map<String, dynamic>;
       var offer = data['offer'];
       print('Got offer: $offer');
-      Map<String, dynamic> configuration = {
-        "iceServers": [
-          {
-            "urls": ["stun:stun.l.google.com:19302"]
-          }
-        ]
-      };
       peerConnection = await createPeerConnection(configuration);
       registerPeerConnectionListners();
       localStream?.getTracks().forEach((track) {
