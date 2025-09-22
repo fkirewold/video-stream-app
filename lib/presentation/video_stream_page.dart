@@ -40,13 +40,34 @@ initRenderers() async {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 50,),
-        // Row(
-        //   children: [
-        //     Expanded(child: RTCVideoView(localRenderer)),
-        //     Expanded(child: RTCVideoView(remoteRenderer)),
-        //   ],
-        // ),
+        Expanded(
+          child: RTCVideoView(localRenderer,mirror:true),
+        ),
+        Expanded(
+          child: RTCVideoView(remoteRenderer),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(onPressed: ()async{
+              await signaling.openUserMedia(localRenderer, remoteRenderer);
+              setState(() {
+              });
+            }, child: Text("Open Camera & Mic")),
+            ElevatedButton(onPressed: ()async{
+              await signaling.createRoom(remoteRenderer);
+              setState(() {
+              });
+            }, child: Text("Create Room")),
+            // ElevatedButton(onPressed: ()async{
+            //   await signaling.hangUp(localRenderer);
+            //   setState(() {
+            //     remoteRenderer.srcObject=null;
+            //     localRenderer.srcObject=null;
+            //   });
+            // }, child: Text("Hang Up")),
+          ],
+        )
       ],
     );
   }
