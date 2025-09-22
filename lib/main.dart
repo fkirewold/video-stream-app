@@ -23,6 +23,7 @@ class VideoStream extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.grey,
         appBar: AppBar(
           backgroundColor: Colors.blue,
           title: Text("Video Stream"),

@@ -30,40 +30,25 @@ class Signaling {
         remoteStream = event.streams[0];
       }
     };
-    var callerCandidateCollection = roomRef.collection("callerCandidates");
-    peerConnection?.onIceCandidate = (RTCIceCandidate candidate) async {
-      print('Got candidate: ${candidate.toMap()}');
-      callerCandidateCollection.add(candidate.toMap());
-    };
-    RTCSessionDescription offer = await peerConnection!.createOffer();
-    await peerConnection?.setLocalDescription(offer);
-    print('offer created:$offer');
 
-    Map<String, dynamic> roomWithOffer = {
-      "offer": {"type": offer.type, "sdp": offer.sdp}
+    var callerCandidatesCollection= roomRef.collection('callerCandidates');
+    peerConnection?.onIceCandidate =(RTCIceCandidate candidate)
+    {
+        callerCandidatesCollection.add(candidate.toMap());
+      
+    };
+
+    RTCSessionDescription offer= await peerConnection!.createOffer();
+    print('Local Offer created : ${offer.sdp}'
+    );
+    await peerConnection!.setLocalDescription(offer);
+    Map<String,dynamic> roomWithOffer={
+      'offer':offer.toMap()
     };
     await roomRef.set(roomWithOffer);
-     peerConnection?.onTrack = (RTCTrackEvent event) {
-      if (event.streams.isNotEmpty) {
-        onAddRemoteStream?.call(event.streams[0]);
-        remoteStream = event.streams[0];
-      }
-    };
-
-    roomRef.snapshots().listen((snapshot) async {
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-      if (peerConnection?.getRemoteDescription() != null &&
-          data['answer'] != null) {
-        print('Answer received:$data');
-        RTCSessionDescription answer = RTCSessionDescription(
-            data['answer']['sdp'], data['answer']['type']);
-        await peerConnection?.setRemoteDescription(answer);
-      }
-    });
+    
     print('New room created with SDK offer. Room ID: ${roomRef.id}');
    // var currentRoomText = 'Current room is ${roomRef.id} - You are the caller!';
-
-
     return roomRef.id;
   }
 
