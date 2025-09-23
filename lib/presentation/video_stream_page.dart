@@ -48,10 +48,15 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
       child: Column(
         children: [
           Expanded(
-            child: RTCVideoView(localRenderer, mirror: true),
+            child: SizedBox(
+              width: double.infinity,
+              child: RTCVideoView(localRenderer, mirror: true)),
           ),
           Expanded(
-            child: RTCVideoView(remoteRenderer),
+            child: SizedBox(
+              width: double.infinity,
+              child: RTCVideoView(remoteRenderer),
+            ),
           ),
            Spacer(),
         TextField(
