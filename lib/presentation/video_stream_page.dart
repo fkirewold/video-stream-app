@@ -26,6 +26,7 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
   void dispose() {
     localRenderer.dispose();
     remoteRenderer.dispose();
+    roomIdController.dispose();
     super.dispose();
     signaling.onAddRemoteStream = (stream) {
       remoteRenderer.srcObject = stream;
@@ -36,6 +37,7 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
   initRenderers() async {
     await localRenderer.initialize();
     await remoteRenderer.initialize();
+  
   }
 
   @override
@@ -52,14 +54,18 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
           ),
            Spacer(),
         TextField(
+          style: TextStyle(color: Colors.blue),
           controller: roomIdController,
           decoration: InputDecoration(
+            labelText: "Room ID",
             hintText: "Enter Room ID",
+
+            hintStyle: TextStyle(color: Colors.grey),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            filled: true,
-            fillColor: Colors.grey,
+            
+           
           ),
         ),
         SizedBox(height: 15,),
