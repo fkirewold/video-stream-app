@@ -1,4 +1,3 @@
-  
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
@@ -12,65 +11,89 @@ class VideoStreamPage extends StatefulWidget {
 }
 
 class _VideoStreamPageState extends State<VideoStreamPage> {
-  FirebaseFirestore instance=FirebaseFirestore.instance;
+  FirebaseFirestore instance = FirebaseFirestore.instance;
   RTCVideoRenderer localRenderer = RTCVideoRenderer();
-  RTCVideoRenderer remoteRenderer=RTCVideoRenderer();
-  Signaling signaling=Signaling();
-  @override void initState() {
+  RTCVideoRenderer remoteRenderer = RTCVideoRenderer();
+  Signaling signaling = Signaling();
+  @override
+  void initState() {
     super.initState();
     initRenderers();
   }
-  @override void dispose() {
+
+  @override
+  void dispose() {
     localRenderer.dispose();
     remoteRenderer.dispose();
     super.dispose();
-    signaling.onAddRemoteStream=(stream){
-      remoteRenderer.srcObject=stream;
-      setState(() {
-      });
+    signaling.onAddRemoteStream = (stream) {
+      remoteRenderer.srcObject = stream;
+      setState(() {});
     };
   }
 
-initRenderers() async {
+  initRenderers() async {
     await localRenderer.initialize();
     await remoteRenderer.initialize();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        
-        Expanded(
-          child: RTCVideoView(localRenderer,mirror:true),
-        ),
-        Expanded(
-          child: RTCVideoView(remoteRenderer),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-
-            ElevatedButton(onPressed: ()async{
-              await signaling.openUserMedia(localRenderer, remoteRenderer);
-              setState(() {
-              });
-            }, child: Text("Open Camera & Mic")),
-            ElevatedButton(onPressed: ()async{
-              await signaling.createRoom(remoteRenderer);
-              setState(() {
-              });
-            }, child: Text("Create Room")),
-            ElevatedButton(onPressed: ()async{
-              await signaling.hangUp(localRenderer);
-              setState(() {
-                remoteRenderer.srcObject=null;
-                localRenderer.srcObject=null;
-              });
-            }, child: Text("Hang Up")),
-          ],
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          Expanded(
+            child: RTCVideoView(localRenderer, mirror: true),
+          ),
+          Expanded(
+            child: RTCVideoView(remoteRenderer),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue
+                    ),
+                  
+                      onPressed: () async {
+                        await signaling.openUserMedia(
+                            localRenderer, remoteRenderer);
+                        setState(() {});
+                      },
+                      child: Text("Camera",style: TextStyle(color: Colors.white,fontSize: 15),)),
+                ),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: ElevatedButton(
+                    onPressed: () async {
+                      await signaling.createRoom(remoteRenderer);
+                      setState(() {});
+                    },
+                    child: Text("Create Room")),
+              ),
+                          SizedBox(width: 10),
+      
+              Expanded(
+                child: ElevatedButton(
+                    onPressed: () async {
+                      await signaling.hangUp(localRenderer);
+                      setState(() {
+                        remoteRenderer.srcObject = null;
+                        localRenderer.srcObject = null;
+                      });
+                    },
+                    child: Text("Hang Up")),
+              ),
+            ],
+          ),
+          SizedBox(height: 30,)
+        ],
+      ),
     );
   }
 }
