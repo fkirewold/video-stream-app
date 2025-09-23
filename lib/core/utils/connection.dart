@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class Connection {
   // Connection-related methods and properties
-  Future<bool> checkConnection(BuildContext context) async {
+  static Future<bool> checkConnection(BuildContext context) async {
 
     var connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult.contains( ConnectivityResult.none)) {
