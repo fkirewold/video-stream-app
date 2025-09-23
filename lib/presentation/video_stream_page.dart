@@ -54,16 +54,21 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
           ),
            Spacer(),
         TextField(
-          style: TextStyle(color: Colors.blue),
+          style: TextStyle(color: Colors.black),
           controller: roomIdController,
           decoration: InputDecoration(
             labelText: "Room ID",
             hintText: "Enter Room ID",
-
-            hintStyle: TextStyle(color: Colors.grey),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
+            hintStyle: TextStyle(color: Colors.black),
+            //border: InputBorder.none,
+            filled: true,
+            fillColor: Colors.white54,
+            contentPadding:
+                EdgeInsets.symmetric(vertical: 14.0, horizontal: 10.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide.none,
+                ),
             
            
           ),
