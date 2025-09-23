@@ -14,6 +14,7 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
   FirebaseFirestore instance = FirebaseFirestore.instance;
   RTCVideoRenderer localRenderer = RTCVideoRenderer();
   RTCVideoRenderer remoteRenderer = RTCVideoRenderer();
+  final TextEditingController roomIdController = TextEditingController();
   Signaling signaling = Signaling();
   @override
   void initState() {
@@ -49,6 +50,19 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
           Expanded(
             child: RTCVideoView(remoteRenderer),
           ),
+           Spacer(),
+        TextField(
+          controller: roomIdController,
+          decoration: InputDecoration(
+            hintText: "Enter Room ID",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            filled: true,
+            fillColor: Colors.grey,
+          ),
+        ),
+        SizedBox(height: 15,),
           Row(
             children: [
               Expanded(
@@ -69,25 +83,36 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
               ),
               SizedBox(width: 10),
               Expanded(
-                child: ElevatedButton(
-                    onPressed: () async {
-                      await signaling.createRoom(remoteRenderer);
-                      setState(() {});
-                    },
-                    child: Text("Create Room")),
-              ),
-                          SizedBox(width: 10),
-      
+                child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue
+                      ),
+                      onPressed: () async {
+                       roomIdController.text=await signaling.createRoom(remoteRenderer);
+                        setState(() {});
+                      },
+                      child: Text("Create Room",style: TextStyle(color: Colors.white,fontSize: 15),))),
+                ),
+              
+               SizedBox(width: 10),
+             
               Expanded(
-                child: ElevatedButton(
-                    onPressed: () async {
-                      await signaling.hangUp(localRenderer);
-                      setState(() {
-                        remoteRenderer.srcObject = null;
-                        localRenderer.srcObject = null;
-                      });
-                    },
-                    child: Text("Hang Up")),
+                child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,),
+                      onPressed: () async {
+                        await signaling.hangUp(localRenderer);
+                        setState(() {
+                          remoteRenderer.srcObject = null;
+                          localRenderer.srcObject = null;
+                        });
+                      },
+                      child: Text("Hang Up",style: TextStyle(color: Colors.white,fontSize: 15),)),
+                ),
               ),
             ],
           ),
