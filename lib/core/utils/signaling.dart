@@ -7,13 +7,13 @@ class Signaling {
   MediaStream? remoteStream;
   String? roomId;
 
-    Map<String, dynamic> configuration = {
-      "iceServers": [
-        {
-          "urls": ["stun:stun.l.google.com:19302"]
-        }
-      ]
-    };
+  Map<String, dynamic> configuration = {
+    "iceServers": [
+      {
+        "urls": ["stun:stun.l.google.com:19302"]
+      }
+    ]
+  };
   Function(MediaStream stream)? onAddRemoteStream;
 
   Future<String> createRoom(RTCVideoRenderer remoteRenderer) async {
@@ -25,32 +25,27 @@ class Signaling {
     localStream?.getTracks().forEach((track) {
       peerConnection?.addTrack(track, localStream!);
     });
-    peerConnection?.onTrack=(RTCTrackEvent event) {
+    peerConnection?.onTrack = (RTCTrackEvent event) {
       if (event.streams.isNotEmpty) {
         onAddRemoteStream?.call(event.streams[0]);
         remoteStream = event.streams[0];
       }
     };
- 
-    var callerCandidatesCollection= roomRef.collection('callerCandidates');
-    peerConnection?.onIceCandidate =(RTCIceCandidate candidate)
-    {
-        callerCandidatesCollection.add(candidate.toMap());
-      
+
+    var callerCandidatesCollection = roomRef.collection('callerCandidates');
+    peerConnection?.onIceCandidate = (RTCIceCandidate candidate) {
+      callerCandidatesCollection.add(candidate.toMap());
     };
 
-    RTCSessionDescription offer= await peerConnection!.createOffer();
-    print('Local Offer created : ${offer.sdp}'
-    );
+    RTCSessionDescription offer = await peerConnection!.createOffer();
+    print('Local Offer created : ${offer.sdp}');
     await peerConnection!.setLocalDescription(offer);
-    Map<String,dynamic> roomWithOffer={
-      'offer':offer.toMap()
-    };
+    Map<String, dynamic> roomWithOffer = {'offer': offer.toMap()};
     await roomRef.set(roomWithOffer);
-    roomId=roomRef.id;
-    
+    roomId = roomRef.id;
+
     print('New room created with SDK offer. Room ID: ${roomId}');
-   // var currentRoomText = 'Current room is ${roomRef.id} - You are the caller!';
+    // var currentRoomText = 'Current room is ${roomRef.id} - You are the caller!';
     return roomId!;
   }
 
@@ -65,53 +60,54 @@ class Signaling {
     peerConnection?.onSignalingState = (RTCSignalingState state) {
       print('Signaling State changed:$state');
     };
-  
   }
-  Future<void> openUserMedia(RTCVideoRenderer localRenderer, RTCVideoRenderer remoteRenderer) async {
- 
- final Map<String,dynamic> mediaConstraints={
-  'audio':true,
-  'video': {
-    'facingMode':'user',
-  }
- };
- localStream= await navigator.mediaDevices.getUserMedia(mediaConstraints);
- localRenderer.srcObject=localStream;
- remoteRenderer.srcObject=await createLocalMediaStream('key');
 
-}
-  Future<void> hangUp(RTCVideoRenderer localRenderer)async {
-    List<MediaStreamTrack> tracks= localRenderer.srcObject!.getTracks();
-    for(var track in tracks)
-    {
+  Future<void> openUserMedia(
+      RTCVideoRenderer localRenderer, RTCVideoRenderer remoteRenderer) async {
+    final Map<String, dynamic> mediaConstraints = {
+      'audio': true,
+      'video': {
+        'facingMode': 'user',
+      }
+    };
+    localStream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+    localRenderer.srcObject = localStream;
+    remoteRenderer.srcObject = await createLocalMediaStream('key');
+  }
+
+  Future<void> hangUp(RTCVideoRenderer localRenderer) async {
+    print('Ending call');
+    List<MediaStreamTrack> tracks = localRenderer.srcObject!.getTracks();
+    for (var track in tracks) {
       track.stop();
     }
-    if(remoteStream!=null)
-    {
-      remoteStream?.getTracks().forEach((track)=>track.stop());
+    if (remoteStream != null) {
+      remoteStream?.getTracks().forEach((track) => track.stop());
     }
-    if(peerConnection!=null)
-    {
-      await peerConnection?.close();
+    peerConnection?.onIceCandidate=null;
+    if (peerConnection != null) {
+      try {
+        await peerConnection?.close();
+      } on Exception catch (e) {
+        print(e.toString());
+      }
     }
-    if(roomId!=null)
-    {
-      var firestore=FirebaseFirestore.instance;
-      var roomRef=firestore.collection('rooms').doc(roomId);
-      var calleeCandidates= await roomRef.collection('calleeCandidates').get();
-      for(var doc in calleeCandidates.docs)
-      {
+    if (roomId != null) {
+      var firestore = FirebaseFirestore.instance;
+      var roomRef = firestore.collection('rooms').doc(roomId);
+      var calleeCandidates = await roomRef.collection('calleeCandidates').get();
+      for (var doc in calleeCandidates.docs) {
         await doc.reference.delete();
       }
-      var callerCandidates= await roomRef.collection('callerCandidates').get();
-      for(var doc in callerCandidates.docs)
-      {
+      var callerCandidates = await roomRef.collection('callerCandidates').get();
+      for (var doc in callerCandidates.docs) {
         await doc.reference.delete();
       }
       await roomRef.delete();
+      print('Room deleted');
     }
-  
   }
+
   Future<void> joinRoom(String roomId, RTCVideoRenderer remoteRenderer) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     DocumentReference roomRef = firestore.collection("rooms").doc(roomId);
@@ -126,29 +122,25 @@ class Signaling {
       localStream?.getTracks().forEach((track) {
         peerConnection?.addTrack(track, localStream!);
       });
-      peerConnection?.onTrack=(RTCTrackEvent event) {
+      peerConnection?.onTrack = (RTCTrackEvent event) {
         if (event.streams.isNotEmpty) {
           onAddRemoteStream?.call(event.streams[0]);
           remoteStream = event.streams[0];
         }
       };
 
-      var calleeCandidatesCollection= roomRef.collection('calleeCandidates');
-      peerConnection?.onIceCandidate =(RTCIceCandidate candidate)
-      {
-          calleeCandidatesCollection.add(candidate.toMap());
-        
+      var calleeCandidatesCollection = roomRef.collection('calleeCandidates');
+      peerConnection?.onIceCandidate = (RTCIceCandidate candidate) {
+        calleeCandidatesCollection.add(candidate.toMap());
       };
 
-      RTCSessionDescription offerDescription = RTCSessionDescription(
-          offer['sdp'], offer['type']);
+      RTCSessionDescription offerDescription =
+          RTCSessionDescription(offer['sdp'], offer['type']);
       await peerConnection!.setRemoteDescription(offerDescription);
       RTCSessionDescription answer = await peerConnection!.createAnswer();
       print('Answer created: ${answer.sdp}');
       await peerConnection!.setLocalDescription(answer);
-      Map<String,dynamic> roomWithAnswer={
-        'answer':answer.toMap()
-      };
+      Map<String, dynamic> roomWithAnswer = {'answer': answer.toMap()};
       await roomRef.update(roomWithAnswer);
 
       // Listening for remote ICE candidates
@@ -166,5 +158,4 @@ class Signaling {
       });
     }
   }
-
 }
