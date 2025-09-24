@@ -58,9 +58,8 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
             child: Expanded(
               child: RTCVideoView(remoteRenderer,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,),          
             ),
-          ),
-           
-        TextField(
+          ),        
+          TextField(
           style: TextStyle(color: Colors.black),
           controller: roomIdController,
           decoration: InputDecoration(
@@ -80,7 +79,7 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
            
           ),
         ),
-        SizedBox(height: 15,),
+          SizedBox(height: 15,),
           Row(
             children: [
               Expanded(
