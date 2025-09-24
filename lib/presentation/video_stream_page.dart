@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:video_stream_app/core/utils/connection.dart';
 import 'package:video_stream_app/core/utils/signaling.dart';
 
 class VideoStreamPage extends StatefulWidget {
@@ -50,7 +51,13 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
             child: RTCVideoView(localRenderer, mirror: true,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,),
           ),
           Expanded(
-            child: RTCVideoView(remoteRenderer,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,),
+            child: RTCVideoView(remoteRenderer,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,),          
+          ),
+          Expanded(
+            child: SizedBox(
+              width: double.infinity,
+              child: RTCVideoView(remoteRenderer),
+            ),
           ),
            Spacer(),
         TextField(
@@ -83,8 +90,11 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue
                     ),
-                  
                       onPressed: () async {
+                        bool checkConnection=await Connection.checkConnection( context);
+                        if(checkConnection==false){
+                          return;
+                        }
                         await signaling.openUserMedia(
                             localRenderer, remoteRenderer);
                         setState(() {});
@@ -101,6 +111,10 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
                         backgroundColor: Colors.blue
                       ),
                       onPressed: () async {
+                        bool checkConnection=await Connection.checkConnection( context);
+                        if(checkConnection==false){
+                          return;
+                        }
                        roomIdController.text=await signaling.createRoom(remoteRenderer);
                         setState(() {});
                       },
