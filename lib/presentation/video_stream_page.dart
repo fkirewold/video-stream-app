@@ -49,19 +49,17 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
         children: [
           SizedBox(
             width:MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.3,
             child: Expanded(
               child: RTCVideoView(localRenderer, mirror: true,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,),
             ),
           ),
           SizedBox(
             width:MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.3,
             child: Expanded(
               child: RTCVideoView(remoteRenderer,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,),          
             ),
           ),
-           Spacer(),
+           
         TextField(
           style: TextStyle(color: Colors.black),
           controller: roomIdController,
