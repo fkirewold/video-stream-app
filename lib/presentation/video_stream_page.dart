@@ -47,10 +47,10 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
       child: Column(
         children: [
           Expanded(
-            child: RTCVideoView(localRenderer, mirror: true),
+            child: RTCVideoView(localRenderer, mirror: true,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,),
           ),
           Expanded(
-            child: RTCVideoView(remoteRenderer),
+            child: RTCVideoView(remoteRenderer,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,),
           ),
            Spacer(),
         TextField(
@@ -106,9 +106,7 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
                       },
                       child: Text("Create Room",style: TextStyle(color: Colors.white,fontSize: 15),))),
                 ),
-              
                SizedBox(width: 10),
-             
               Expanded(
                 child: SizedBox(
                   height: 50,
