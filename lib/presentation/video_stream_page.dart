@@ -182,19 +182,7 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
                           color: Colors.white,
                         ),
                       ),
-                    )
-
-                    //  ElevatedButton(
-                    //   style: ElevatedButton.styleFrom(
-                    //     backgroundColor: Colors.blue,),
-                    //     onPressed: () async {
-                    //       await signaling.hangUp(localRenderer);
-                    //       setState(() {
-                    //         remoteRenderer.srcObject = null;
-                    //         localRenderer.srcObject = null;
-                    //       });
-                    //     },
-                    //     child: Text("Hang Up",style: TextStyle(color: Colors.white,fontSize: 15),)),
+                    )               
                     ),
               ),
             ],
