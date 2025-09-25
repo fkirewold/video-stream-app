@@ -85,39 +85,42 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
                   ),
                 ),
               ),
-               SizedBox(width: 10,),
-               ElevatedButton(
-                onPressed:() async{
-                bool checkConnection = await Connection.checkConnection(context);
-                if (checkConnection == false) {
-                  return;
-                }
-                await signaling.joinRoom(
-                    roomIdController.text, remoteRenderer);
-                setState(() {});
-               }, 
-               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 20.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-               ),
-               child: Text('Join Room')),
+              SizedBox(
+                width: 10,
+              ),
+              ElevatedButton(
+                  onPressed: () async {
+                    bool checkConnection =
+                        await Connection.checkConnection(context);
+                    if (checkConnection == false) {
+                      return;
+                    }
+                    await signaling.joinRoom(
+                        roomIdController.text, remoteRenderer);
+                    setState(() {});
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 14.0, horizontal: 20.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  child: Text('Join Room')),
             ],
           ),
           SizedBox(
             height: 15,
-          ),//
+          ), //
           Row(
             children: [
               Expanded(
                 child: SizedBox(
-                 // height: 50,
+                  // height: 50,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue),
-
                       onPressed: () async {
                         bool checkConnection =
                             await Connection.checkConnection(context);
@@ -137,7 +140,7 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
               SizedBox(width: 10),
               Expanded(
                 child: SizedBox(
-                   // height: 50,
+                    // height: 50,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue),
@@ -182,8 +185,7 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
                           color: Colors.white,
                         ),
                       ),
-                    )               
-                    ),
+                    )),
               ),
             ],
           ),
