@@ -63,23 +63,48 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
                   objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
                 )),
           ),
-          TextField(
-            style: TextStyle(color: Colors.black),
-            controller: roomIdController,
-            decoration: InputDecoration(
-              labelText: "Room ID",
-              hintText: "Enter Room ID",
-              hintStyle: TextStyle(color: Colors.black),
-              //border: InputBorder.none,
-              filled: true,
-              fillColor: Colors.white54,
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 14.0, horizontal: 10.0),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: BorderSide.none,
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  style: TextStyle(color: Colors.black),
+                  controller: roomIdController,
+                  decoration: InputDecoration(
+                    labelText: "Room ID",
+                    hintText: "Enter Room ID",
+                    hintStyle: TextStyle(color: Colors.black),
+                    //border: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.white54,
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 14.0, horizontal: 10.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
               ),
-            ),
+               SizedBox(width: 10,),
+               ElevatedButton(
+                onPressed:() async{
+                bool checkConnection = await Connection.checkConnection(context);
+                if (checkConnection == false) {
+                  return;
+                }
+                await signaling.joinRoom(
+                    roomIdController.text, remoteRenderer);
+                setState(() {});
+               }, 
+               style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 20.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+               ),
+               child: Text('Join Room')),
+            ],
           ),
           SizedBox(
             height: 15,
@@ -88,10 +113,11 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
             children: [
               Expanded(
                 child: SizedBox(
-                  height: 50,
+                 // height: 50,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue),
+
                       onPressed: () async {
                         bool checkConnection =
                             await Connection.checkConnection(context);
@@ -111,7 +137,7 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
               SizedBox(width: 10),
               Expanded(
                 child: SizedBox(
-                    height: 50,
+                   // height: 50,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue),
