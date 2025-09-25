@@ -47,17 +47,15 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          SizedBox(
-            width:MediaQuery.of(context).size.width,
-            child: Expanded(
-              child: RTCVideoView(localRenderer, mirror: true,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,),
-            ),
+          Expanded(
+            child: SizedBox(
+              width: MediaQuery.of( context).size.width,
+              child: RTCVideoView(localRenderer, mirror: true,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,)),
           ),
-          SizedBox(
-            width:MediaQuery.of(context).size.width,
-            child: Expanded(
-              child: RTCVideoView(remoteRenderer,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,),          
-            ),
+          Expanded(
+            child: SizedBox(
+              width: MediaQuery.of( context).size.width,
+              child: RTCVideoView(remoteRenderer,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,)),          
           ),
            
         TextField(
