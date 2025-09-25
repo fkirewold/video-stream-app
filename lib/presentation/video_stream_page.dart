@@ -108,7 +108,7 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
           ),
           SizedBox(
             height: 15,
-          ),
+          ),//
           Row(
             children: [
               Expanded(
