@@ -21,6 +21,10 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
   void initState() {
     super.initState();
     initRenderers();
+    signaling.onAddRemoteStream = (stream) {
+      remoteRenderer.srcObject = stream;
+      setState(() {});
+    };
   }
 
   @override
@@ -29,10 +33,6 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
     remoteRenderer.dispose();
     roomIdController.dispose();
     super.dispose();
-    signaling.onAddRemoteStream = (stream) {
-      remoteRenderer.srcObject = stream;
-      setState(() {});
-    };
   }
 
   initRenderers() async {
