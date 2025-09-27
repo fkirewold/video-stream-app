@@ -6,6 +6,7 @@ A real-time video streaming app built with Flutter, using WebRTC for peer-to-pee
 ## Features
 - Real-time video and audio streaming
 - Peer-to-peer connection via WebRTC
+- push notification using FCM
 - WebSocket-based signaling
 - STUN server integration for NAT traversal
 - Cross-platform support (Android & iOS)
