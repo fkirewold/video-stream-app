@@ -16,7 +16,7 @@ A real-time video streaming app built with Flutter, using WebRTC for peer-to-pee
 | Technology        | Purpose                                 |
 |-------------------|------------------------------------------|
 | `flutter_webrtc`  | WebRTC implementation in Flutter         |
-| `firebase firestore| To store Candidates or Network Path     |
+| `firebase firestore`| To store Candidates or Network Path     |
 | `WebSocket`       | Signaling between peers                  |
 | `STUN server`     | Discover public IP and port for NAT      |
 | `Dart`            | Programming language                     |
