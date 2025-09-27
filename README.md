@@ -19,6 +19,7 @@ A real-time video streaming app built with Flutter, using WebRTC for peer-to-pee
 | `firebase firestore`| To store Candidates or Network Path     |
 | `WebSocket`       | Signaling between peers                  |
 | `STUN server`     | Discover public IP and port for NAT      |
+| `Firebase Messaging Cloud` | Pushing Notification
 | `Dart`            | Programming language                     |
 | `Flutter`         | UI framework                             |
 | `Connectivity plus`| Checking Internet Connnection           |
