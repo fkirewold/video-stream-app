@@ -44,6 +44,17 @@ class Signaling {
     Map<String, dynamic> roomWithOffer = {'offer': offer.toMap()};
     await roomRef.set(roomWithOffer);
     roomId = roomRef.id;
+    roomRef.collection('calleeCandidates').snapshots().listen((snapshot) {
+      snapshot.docChanges.forEach((change) {
+        if (change.type == DocumentChangeType.added) {
+          Map<String, dynamic> data = change.doc.data() as Map<String, dynamic>;
+          print('Got new remote ICE candidate: $data');
+          RTCIceCandidate candidate =
+              RTCIceCandidate(data['candidate'], data['sdpMid'], data['sdpMLineIndex']);
+          peerConnection?.addCandidate(candidate);
+        }
+      });
+    });
 
     print('New room created with SDK offer. Room ID: ${roomId}');
     // var currentRoomText = 'Current room is ${roomRef.id} - You are the caller!';
