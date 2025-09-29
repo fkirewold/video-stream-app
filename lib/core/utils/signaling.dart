@@ -1,3 +1,5 @@
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 
@@ -59,6 +61,12 @@ class Signaling {
     };
     peerConnection?.onSignalingState = (RTCSignalingState state) {
       print('Signaling State changed:$state');
+
+      peerConnection?.onAddStream=(MediaStream stream){
+        onAddRemoteStream?.call(stream);
+        remoteStream=stream;
+
+      }
     };
   }
 
