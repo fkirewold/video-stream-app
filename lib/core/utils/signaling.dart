@@ -66,7 +66,7 @@ class Signaling {
         onAddRemoteStream?.call(stream);
         remoteStream=stream;
 
-      }
+      };
     };
   }
 
