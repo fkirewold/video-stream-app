@@ -8,13 +8,13 @@ class Signaling {
   MediaStream? remoteStream;
   String? roomId;
 
-  Map<String, dynamic> configuration = {
-    "iceServers": [
-      {
-        "urls": ["stun:stun.l.google.com:19302"]
-      }
-    ]
-  };
+Map<String, dynamic> configuration = {
+  "iceServers": [
+    {"urls": "stun:stun.l.google.com:19302"},
+    {"urls": "stun:stun1.l.google.com:19302"},
+    {"urls": "stun:stun2.l.google.com:19302"},
+  ]
+};
   Function(MediaStream stream)? onAddRemoteStream;
 
   Future<String> createRoom(RTCVideoRenderer remoteRenderer) async {
