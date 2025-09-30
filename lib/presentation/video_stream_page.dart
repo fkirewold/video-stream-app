@@ -22,8 +22,9 @@ class _VideoStreamPageState extends State<VideoStreamPage> {
     super.initState();
     initRenderers();
     signaling.onAddRemoteStream = (stream) {
-      remoteRenderer.srcObject = stream;
-      setState(() {});
+      setState(() {
+          remoteRenderer.srcObject = stream;
+      });
     };
   }
 
