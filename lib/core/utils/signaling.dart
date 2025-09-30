@@ -55,6 +55,17 @@ class Signaling {
         }
       });
     });
+    roomRef.snapshots().listen((snapshots)async{
+      if(snapshots.data()!=null){
+        var data = snapshots.data() as Map<String, dynamic>;
+        if (data['answer'] != null) {
+          print('Got remote description: ${data['answer']}');
+          RTCSessionDescription answer = RTCSessionDescription(
+              data['answer']['sdp'], data['answer']['type']);
+          await peerConnection!.setRemoteDescription(answer);
+        }
+      }
+    });
 
     print('New room created with SDK offer. Room ID: ${roomId}');
     // var currentRoomText = 'Current room is ${roomRef.id} - You are the caller!';
@@ -71,17 +82,11 @@ class Signaling {
     };
     peerConnection?.onSignalingState = (RTCSignalingState state) {
       print('Signaling State changed:$state');
-
-      peerConnection?.onAddStream=(MediaStream stream){
-        onAddRemoteStream?.call(stream);
-        remoteStream=stream;
-
-      };
     };
   }
 
   Future<void> openUserMedia(
-      RTCVideoRenderer localRenderer, RTCVideoRenderer remoteRenderer) async {
+    RTCVideoRenderer localRenderer, RTCVideoRenderer remoteRenderer) async {
     final Map<String, dynamic> mediaConstraints = {
       'audio': true,
       'video': {
@@ -90,7 +95,6 @@ class Signaling {
     };
     localStream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
     localRenderer.srcObject = localStream;
-    remoteRenderer.srcObject = await createLocalMediaStream('key');
   }
 
   Future<void> hangUp(RTCVideoRenderer localRenderer) async {
