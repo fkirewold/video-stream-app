@@ -44,11 +44,13 @@ flutter pub get
 ### 3. Configure STUN & Signaling Server
 **Update your ICE server and signaling logic in your Dart files:**
 ```dart
-final Map<String, dynamic> config = {
-  'iceServers': [
-    {'urls': 'stun:stun.l.google.com:19302'},
-  ],
-};
+Map<String, dynamic> configuration = {
+  "iceServers": [
+    {"urls": "stun:stun.l.google.com:19302"},
+    {"urls": "stun:stun1.l.google.com:19302"},
+    {"urls": "stun:stun2.l.google.com:19302"},
+  ]
+}
 ```
 ### 4. Run the App
 ```bash
